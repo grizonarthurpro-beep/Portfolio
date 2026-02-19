@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arthur GRIZON · Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --bg:        #F0F2F5;
+      --surface:   #FFFFFF;
+      --surface2:  #F7F8FA;
+      --border:    #E4E8EF;
+      --text:      #141C2E;
+      --sub:       #6B7A99;
+      --accent:    #3B6EF5;
+      --accent2:   #0ECB81;
+      --accent3:   #F59E3B;
+      --pill-bg:   #EBF0FF;
+      --pill-txt:  #3B6EF5;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 2px 8px rgba(20,28,46,.06);
+      --shadow-md: 0 8px 32px rgba(20,28,46,.10);
+      --shadow-lg: 0 20px 60px rgba(20,28,46,.13);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: fixed; top: 1.2rem; left: 50%; transform: translateX(-50%);
+      z-index: 200; background: rgba(255,255,255,.82);
+      backdrop-filter: blur(18px); border: 1px solid var(--border);
+      border-radius: 9999px; padding: .55rem .55rem .55rem 1.6rem;
+      display: flex; align-items: center; gap: 1rem;
+      box-shadow: var(--shadow-md); transition: box-shadow .3s;
+      white-space: nowrap;
+    }
+    .nav-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .82rem; font-weight: 500;
+      color: var(--text); text-decoration: none; letter-spacing: .02em;
+    }
+    .nav-brand span { color: var(--accent); }
+    .nav-sep { width: 1px; height: 18px; background: var(--border); }
+    .nav-links { display: flex; align-items: center; gap: .25rem; }
+    .nav-links a {
+      text-decoration: none; font-size: .78rem; font-weight: 500;
+      color: var(--sub); padding: .45rem .85rem; border-radius: 9999px;
+      transition: background .2s, color .2s;
+    }
+    .nav-links a:hover, .nav-links a.active { background: var(--accent); color: #fff; }
+
+    main { padding: 7rem 1.5rem 4rem; max-width: 1060px; margin: 0 auto; }
+    section { margin-bottom: 5rem; }
+
+    .sec-head { margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
+    .sec-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .7rem; background: var(--pill-bg); color: var(--accent);
+      padding: .3rem .8rem; border-radius: 9999px; font-weight: 500; white-space: nowrap;
+    }
+    .sec-title {
+      font-size: 1.5rem; font-weight: 700; color: var(--text); letter-spacing: -.02em;
+    }
+    .sec-line { flex: 1; height: 1px; background: var(--border); }
+
+    #hero {
+      background: var(--surface); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); padding: 3.5rem 3rem;
+      box-shadow: var(--shadow-sm);
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 3rem; align-items: center;
+      position: relative; overflow: hidden; margin-bottom: 2rem;
+    }
+    .hero-glow {
+      position: absolute; top: -80px; right: -80px;
+      width: 320px; height: 320px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,110,245,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-glow2 {
+      position: absolute; bottom: -60px; left: 40%;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(14,203,129,.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-right { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+    .hero-photo {
+      width: 160px; height: 160px; border-radius: 50%;
+      border: 4px solid var(--border); background: var(--surface2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; color: var(--sub); text-align: center;
+      line-height: 1.3; padding: 1rem;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .hero-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .hero-prompt {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .75rem; color: var(--accent2); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .hero-prompt::before { content: '▶'; font-size: .6rem; }
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 700;
+      letter-spacing: -.03em; line-height: 1.1; margin-bottom: .9rem;
+    }
+    h1 .name-first { color: var(--text); }
+    h1 .name-last { color: var(--accent); }
+    .hero-role { font-size: 1rem; font-weight: 500; color: var(--sub); margin-bottom: 1.6rem; }
+    .hero-desc {
+      font-size: .9rem; color: var(--sub); max-width: 480px;
+      line-height: 1.8; margin-bottom: 2rem;
+    }
+    .hero-btns { display: flex; gap: .8rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .65rem 1.4rem; border-radius: 9999px; font-size: .83rem;
+      font-weight: 600; text-decoration: none; transition: all .22s; border: none; cursor: pointer;
+    }
+    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 16px rgba(59,110,245,.3); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,110,245,.4); }
+    .btn-outline { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
+    .btn-outline:hover { background: var(--surface2); border-color: var(--accent); color: var(--accent); }
+    .btn-download { background: var(--accent2); color: #fff; box-shadow: 0 4px 16px rgba(14,203,129,.3); }
+    .btn-download:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(14,203,129,.4); }
+
+    .hero-stats { display: flex; flex-direction: column; gap: .8rem; width: 100%; }
+    .stat-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 1rem 1.4rem;
+      display: flex; align-items: center; gap: 1rem; min-width: 180px;
+    }
+    .stat-icon {
+      width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--surface); display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .stat-val { font-size: 1.3rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .stat-lbl { font-size: .73rem; color: var(--sub); margin-top: .15rem; }
+
+    .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.5rem; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem 2.2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .about-body { font-size: .9rem; color: var(--sub); line-height: 1.85; margin-bottom: 1.4rem; }
+
+    .info-list { display: flex; flex-direction: column; gap: 1rem; }
+    .info-item {
+      display: flex; align-items: flex-start; gap: .9rem;
+      padding-bottom: 1rem; border-bottom: 1px solid var(--border);
+    }
+    .info-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .info-ico {
+      width: 34px; height: 34px; border-radius: 9px; background: var(--pill-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; flex-shrink: 0;
+    }
+    .info-lbl { font-size: .7rem; color: var(--sub); text-transform: uppercase; letter-spacing: .07em; }
+    .info-val { font-size: .88rem; color: var(--text); font-weight: 500; margin-top: .1rem; }
+    .info-val a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+    .info-val a:hover { opacity: .7; }
+
+    .projects-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2.4rem 2.6rem;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .25s, transform .25s, border-color .25s;
+      position: relative; overflow: hidden;
+    }
+    .project-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+      border-color: rgba(59,110,245,.25);
+    }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%; background: var(--accent);
+      border-radius: 4px 0 0 4px; opacity: 0;
+      transition: opacity .25s;
+    }
+    .project-card:hover::before { opacity: 1; }
+    .project-card.school::before { background: var(--accent2); }
+    .project-card.auto::before { background: var(--accent3); }
+
+    .project-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 1rem; margin-bottom: 1.2rem;
+    }
+    .project-meta { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
+    .project-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem; color: var(--sub);
+    }
+    .project-type {
+      font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+      padding: .2rem .7rem; border-radius: 9999px;
+    }
+    .type-perso { background: var(--pill-bg); color: var(--accent); }
+    .type-school { background: #E6FAF2; color: #0B9E5E; }
+    .type-auto { background: #FEF4E6; color: #C47A0B; }
+
+    .project-status {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .73rem; color: var(--sub); flex-shrink: 0;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--accent2);
+      box-shadow: 0 0 0 3px rgba(14,203,129,.18);
+    }
+
+    .project-title {
+      font-size: 1.25rem; font-weight: 700; color: var(--text);
+      letter-spacing: -.02em; margin-bottom: .5rem;
+    }
+    .project-subtitle {
+      font-size: .82rem; color: var(--accent); font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 1rem;
+    }
+    .project-body {
+      font-size: .88rem; color: var(--sub); line-height: 1.85; margin-bottom: 1.6rem;
+    }
+
+    .project-details {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1px; background: var(--border); border-radius: var(--radius-md);
+      overflow: hidden; margin-bottom: 1.6rem;
+    }
+    .detail-cell { background: var(--surface2); padding: 1rem 1.2rem; }
+    .detail-cell-lbl {
+      font-size: .68rem; text-transform: uppercase; letter-spacing: .08em;
+      color: var(--sub); margin-bottom: .3rem;
+    }
+    .detail-cell-val { font-size: .84rem; color: var(--text); font-weight: 500; }
+
+    .n8n-agents { 
+      display: flex; flex-direction: column; gap: .8rem; margin-bottom: 1.6rem;
+      background: var(--surface2); padding: 1.4rem; border-radius: var(--radius-md);
+    }
+    .agent-item {
+      display: flex; align-items: flex-start; gap: .8rem;
+      padding: .8rem; background: var(--surface); border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .agent-icon { font-size: 1.3rem; line-height: 1; }
+    .agent-text { flex: 1; }
+    .agent-title { font-size: .85rem; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+    .agent-desc { font-size: .78rem; color: var(--sub); line-height: 1.6; }
+
+    .project-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tag {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 9999px; padding: .25rem .75rem;
+      font-size: .72rem; color: var(--sub); font-weight: 500;
+    }
+    .project-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .78rem; font-weight: 600; color: var(--accent);
+      text-decoration: none; border-radius: 9999px;
+      padding: .4rem .9rem; background: var(--pill-bg);
+      transition: background .2s, transform .2s;
+    }
+    .project-link:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+
+    .certif-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .certif-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem 2.2rem;
+      box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+      transition: box-shadow .25s, transform .25s;
+    }
+    .certif-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+    .certif-glow {
+      position: absolute; top: -40px; right: -40px;
+      width: 160px; height: 160px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,110,245,.08) 0%, transparent 70%);
+    }
+    .certif-glow.green { background: radial-gradient(circle, rgba(14,203,129,.09) 0%, transparent 70%); }
+    .certif-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.4rem; }
+    .certif-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: var(--pill-bg); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+    }
+    .certif-icon.green { background: #E6FAF2; }
+    .certif-name { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+    .certif-org { font-size: .78rem; color: var(--sub); }
+    .certif-badge {
+      display: inline-flex; align-items: center; gap: .35rem;
+      background: #E6FAF2; color: #0B9E5E;
+      font-size: .7rem; font-weight: 600; padding: .28rem .7rem;
+      border-radius: 9999px; margin-bottom: 1rem;
+    }
+    .certif-badge.in-progress {
+      background: #FEF4E6; color: #C47A0B;
+    }
+    .certif-body { font-size: .87rem; color: var(--sub); line-height: 1.75; margin-bottom: 1.2rem; }
+
+    .letter-wrap {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2.8rem 3rem;
+      box-shadow: var(--shadow-sm); max-width: 760px; position: relative; overflow: hidden;
+    }
+    .letter-quote {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6rem; line-height: .8; color: var(--pill-bg);
+      position: absolute; top: 1.5rem; left: 2rem; user-select: none;
+    }
+    .letter-text {
+      font-size: 1rem; line-height: 1.9; color: var(--sub);
+      font-style: italic; margin-bottom: 2rem; position: relative; z-index: 1; padding-top: 1rem;
+    }
+    .letter-author { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .letter-avatar {
+      width: 56px; height: 56px; border-radius: 50%; background: var(--surface2);
+      border: 2px solid var(--border); 
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; color: var(--sub); text-align: center; line-height: 1.3;
+      overflow: hidden;
+    }
+    .letter-avatar img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .letter-name { font-weight: 600; font-size: .9rem; }
+    .letter-role { font-size: .78rem; color: var(--sub); line-height: 1.4; }
+
+    footer {
+      max-width: 1060px; margin: 0 auto; padding: 0 1.5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-brand { font-family: 'JetBrains Mono', monospace; font-size: .82rem; color: var(--sub); }
+    .footer-brand span { color: var(--accent); font-weight: 600; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: .78rem; color: var(--sub); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .reveal {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 820px) {
+      nav { left: 1rem; right: 1rem; transform: none; top: .8rem; }
+      .nav-brand, .nav-sep { display: none; }
+      .about-grid, .certif-grid { grid-template-columns: 1fr; }
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { flex-direction: column; width: 100%; }
+      .hero-stats { width: 100%; }
+    }
+    @media (max-width: 560px) {
+      .nav-links a { padding: .4rem .5rem; font-size: .72rem; }
+      main { padding: 6rem 1rem 3rem; }
+      .project-card { padding: 1.6rem 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="mainNav">
+    <a href="#hero" class="nav-brand">arthur<span>.grizon</span></a>
+    <div class="nav-sep"></div>
+    <div class="nav-links">
+      <a href="#about" class="nav-link">À propos de moi</a>
+      <a href="#projects" class="nav-link">Projets</a>
+      <a href="#certifications" class="nav-link">Certifications</a>
+      <a href="#letter" class="nav-link">Recommandation</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <div id="hero" class="reveal">
+      <div class="hero-glow"></div>
+      <div class="hero-glow2"></div>
+      <div class="hero-content">
+        <p class="hero-prompt">portfolio.init() — Réseaux &amp; Systèmes</p>
+        <h1>
+          <span class="name-first">Arthur</span><br>
+          <span class="name-last">GRIZON</span>
+        </h1>
+        <p class="hero-role">Étudiant BTS SIO · Option SISR</p>
+        <p class="hero-desc">Passionné par les infrastructures réseau, les systèmes et la cybersécurité. Je construis, configure et sécurise — toujours en train d'apprendre quelque chose de nouveau.</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-primary">Voir mes projets →</a>
+          <a href="mailto:grizonarthur.pro@gmail.com" class="btn btn-outline">Me contacter</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-stats">
+          <div class="stat-card">
+            <div class="stat-icon">📁</div>
+            <div>
+              <div class="stat-val">5</div>
+              <div class="stat-lbl">Projets réalisés</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🎖️</div>
+            <div>
+              <div class="stat-val">2</div>
+              <div class="stat-lbl">Certifications</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <div>
+              <div class="stat-val">∞</div>
+              <div class="stat-lbl">Curiosité tech</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="about">
+      <div class="sec-head reveal">
+        <span class="sec-badge">01 — about.me</span>
+        <h2 class="sec-title">À propos de moi</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="about-grid">
+        <div class="card reveal">
+          <p class="about-body">
+            Actuellement en fin de deuxième année de BTS SIO option SISR, je suis passionné par tout ce qui touche aux réseaux, aux systèmes d'exploitation et à la cybersécurité. Mon approche est avant tout pratique : j'aime tester, configurer, analyser et optimiser les infrastructures pour vraiment comprendre leur fonctionnement en profondeur.
+          </p>
+          <p class="about-body">
+            <strong>Je recherche activement un contrat d'alternance pour la rentrée prochaine</strong> afin de poursuivre mes études tout en mettant mes compétences au service d'une entreprise. Ponctuel, rigoureux et autonome, je suis titulaire du permis B et mobile pour intégrer une équipe dynamique.
+          </p>
+          <p class="about-body">
+            En périodes hors scolaire, je consacre du temps à l'auto-formation sur différents sujets et projets techniques. L'ensemble de ces réalisations est détaillé plus loin dans ce portfolio.
+          </p>
+        </div>
+        <div class="card reveal">
+          <div class="info-list">
+            <div class="info-item">
+              <div class="info-ico">🎓</div>
+              <div>
+                <div class="info-lbl">Formation</div>
+                <div class="info-val">BTS SIO — Option SISR</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-ico">📍</div>
+              <div>
+                <div class="info-lbl">Localisation</div>
+                <div class="info-val">Chessy - 77700</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-ico">🛡️</div>
+              <div>
+                <div class="info-lbl">Spécialité</div>
+                <div class="info-val">Réseaux · Systèmes · Sécu</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-ico">🚗</div>
+              <div>
+                <div class="info-lbl">Mobilité</div>
+                <div class="info-val">Permis B · Véhiculé</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-ico">📧</div>
+              <div>
+                <div class="info-lbl">Email</div>
+                <div class="info-val">grizonarthur.pro@gmail.com</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-ico">📱</div>
+              <div>
+                <div class="info-lbl">Numéro</div>
+                <div class="info-val">+33 6 58 37 02 69</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-ico">💼</div>
+              <div>
+                <div class="info-lbl">LinkedIn</div>
+                <div class="info-val"><a href="https://www.linkedin.com/in/arthur-grizon-681555368/" target="_blank">arthur-grizon-681555368</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="sec-head reveal">
+        <span class="sec-badge">02 — projects.all</span>
+        <h2 class="sec-title">Projets</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="projects-list">
+
+        <div class="project-card reveal">
+          <div class="project-top">
+            <div class="project-meta">
+              <span class="project-num">#01</span>
+              <span class="project-type type-perso">Personnel</span>
+            </div>
+            <div class="project-status"><div class="status-dot"></div>Terminé</div>
+          </div>
+          <h3 class="project-title">Infrastructure Réseau Sécurisée</h3>
+          <p class="project-subtitle">$ pfSense --firewall --vpn --vlans</p>
+          <p class="project-body">Création d'une infrastructure réseau complète pour une petite entreprise, incluant la segmentation par VLANs, un pare-feu pfSense pour la sécurité périmétrique, et un serveur VPN OpenVPN pour l'accès distant sécurisé. Le projet simule un environnement réel avec plusieurs zones réseau (employés, invités, administration) et des règles de filtrage avancées. J'ai testé la sécurité via des scans de ports (nmap) et analysé les logs pour valider l'efficacité des règles de pare-feu.</p>
+          <div class="project-details">
+            <div class="detail-cell"><div class="detail-cell-lbl">Durée</div><div class="detail-cell-val">3 semaines</div></div>
+            <div class="detail-cell"><div class="detail-cell-lbl">Environnement</div><div class="detail-cell-val">pfSense · OpenVPN</div></div>
+            <div class="detail-cell"><div class="detail-cell-lbl">Résultat</div><div class="detail-cell-val">Infrastructure fonctionnelle ✓</div></div>
+          </div>
+          <div class="project-footer">
+            <div class="tags">
+              <span class="tag">pfSense</span><span class="tag">VPN</span><span class="tag">VLAN</span><span class="tag">Sécurité réseau</span><span class="tag">OpenVPN</span>
+            </div>
+            <a href="#" class="project-link">Voir le projet →</a>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-top">
+            <div class="project-meta">
+              <span class="project-num">#02</span>
+              <span class="project-type type-perso">Personnel</span>
+            </div>
+            <div class="project-status"><div class="status-dot"></div>Terminé</div>
+          </div>
+          <h3 class="project-title">Cluster de Virtualisation Proxmox</h3>
+          <p class="project-subtitle">$ proxmox cluster --ha --replication</p>
+          <p class="project-body">Déploiement d'un cluster de virtualisation avec Proxmox VE sur plusieurs nœuds pour simuler un environnement de production résilient. Configuration de la haute disponibilité (HA) pour garantir la continuité de service en cas de panne d'un nœud, avec réplication automatique des données entre serveurs. Création de multiples VMs (serveurs web, bases de données) avec gestion optimisée des ressources (CPU, RAM, stockage). Mise en place d'une surveillance complète via l'interface Proxmox avec alertes automatiques.</p>
+          <div class="project-details">
+            <div class="detail-cell"><div class="detail-cell-lbl">Durée</div><div class="detail-cell-val">4 semaines</div></div>
+            <div class="detail-cell"><div class="detail-cell-lbl">Environnement</div><div class="detail-cell-val">Proxmox VE · Linux</div></div>
+            <div class="detail-cell"><div class="detail-cell-lbl">Résultat</div><div class="detail-cell-val">Cluster HA opérationnel ✓</div></div>
+          </div>
+          <div class="project-footer">
+            <div class="tags">
+              <span class="tag">Proxmox</span><span class="tag">Virtualisation</span><span class="tag">Haute disponibilité</span><span class="tag">Clustering</span><span class="tag">Réplication</span>
+            </div>
+            <a href="#" class="project-link">Voir le projet →</a>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-top">
+            <div class="project-meta">
+              <span class="project-num">#03</span>
+              <span class="project-type type-perso">Personnel</span>
+            </div>
+            <div class="project-status"><div class="status-dot"></div>Terminé</div>
+          </div>
+          <h3 class="project-title">Réseau d'Entreprise avec QoS & Monitoring</h3>
+          <p class="project-subtitle">$ network --qos --monitoring --optimization</p>
+          <p class="project-body">Mise en place d'un réseau d'entreprise complet avec switches managés, segmentation par VLANs selon les départements, et implémentation de la qualité de service (QoS) pour prioriser le trafic critique (VoIP, applications métier). Déploiement d'une solution de surveillance réseau (Zabbix) pour monitorer en temps réel l'état des équipements, avec alertes automatiques en cas de saturation ou panne. Tests de performance avec iperf et analyse approfondie du trafic pour optimiser la configuration. Production d'un rapport technique détaillé avec propositions d'amélioration.</p>
+          <div class="project-details">
+            <div class="detail-cell"><div class="detail-cell-lbl">Durée</div><div class="detail-cell-val">4 semaines</div></div>
+            <div class="detail-cell"><div class="detail-cell-lbl">Environnement</div><div class="detail-cell-val">Switches · Zabbix</div></div>
+            <div class="detail-cell"><div class="detail-cell-lbl">Résultat</div><div class="detail-cell-val">Réseau optimisé ✓</div></div>
+          </div>
+          <div class="project-footer">
+            <div class="tags">
+              <span class="tag">QoS</span><span class="tag">Zabbix</span><span class="tag">VLAN</span><span class="tag">Monitoring</span><span class="tag">Optimisation réseau</span>
+            </div>
+            <a href="#" class="project-link">Voir le projet →</a>
+          </div>
+        </div>
+
+        <div class="project-card school reveal">
+          <div class="project-top">
+            <div class="project-meta">
+              <span class="project-num">#04</span>
+              <span class="project-type type-school">Scolaire · GSB</span>
+            </div>
+            <div class="project-status"><div class="status-dot" style="background:var(--accent2)"></div>Évalué</div>
+          </div>
+          <h3 class="project-title">Infrastructure Réseau GSB</h3>
+          <p class="project-subtitle">$ gsb deploy --vlans --cisco --packet-tracer</p>
+          <p class="project-body">Conception d'une infrastructure réseau complète pour GSB, un groupe pharmaceutique français fictif utilisé dans le cadre pédagogique. Le projet englobe la création de VLANs pour segmenter les différents services de l'entreprise, la configuration du routage inter-VLAN pour assurer la communication entre les départements, et la mise en place d'équipements Cisco avec un plan d'adressage IP structuré et hiérarchisé. L'infrastructure inclut également la gestion des accès invités et du réseau Wi-Fi avec des politiques de sécurité adaptées. L'ensemble a été modélisé et testé sur Cisco Packet Tracer, permettant une gestion centralisée et une sécurité renforcée grâce aux politiques VLAN. Une documentation technique complète accompagne le déploiement, détaillant l'architecture, le schéma de câblage et les configurations appliquées.</p>
+          <div class="project-details">
+            <div class="detail-cell"><div class="detail-cell-lbl">Contexte</div><div class="detail-cell-val">BTS SIO SISR</div></div>
+            <div class="detail-cell"><div class="detail-cell-lbl">Durée</div><div class="detail-cell-val">4 semaines</div></div>
+            <div class="detail-cell"><div class="detail-cell-lbl">Outils</div><div class="detail-cell-val">Packet Tracer · Cisco</div></div>
+            <div class="detail-cell"><div class="detail-cell-lbl">Note</div><div class="detail-cell-val">16.5/20</div></div>
+          </div>
+          <div class="project-footer">
+            <div class="tags">
+              <span class="tag">VLAN</span><span class="tag">Cisco</span><span class="tag">Routage inter-VLAN</span><span class="tag">Plan d'adressage</span><span class="tag">Packet Tracer</span>
+            </div>
+            <a href="#" class="btn btn-download">📥 Télécharger le dossier complet</a>
+          </div>
+        </div>
+
+        <div class="project-card auto reveal">
+          <div class="project-top">
+            <div class="project-meta">
+              <span class="project-num">#05</span>
+              <span class="project-type type-auto">Automatisation · IA</span>
+            </div>
+            <div class="project-status"><div class="status-dot" style="background:var(--accent3);box-shadow:0 0 0 3px rgba(245,158,59,.18)"></div>En production</div>
+          </div>
+          <h3 class="project-title">Agents IA Intelligents avec n8n</h3>
+          <p class="project-subtitle">$ n8n create --ai-agents --automation</p>
+          <p class="project-body">Dans le cadre de mon auto-formation, j'ai appris à maîtriser n8n, une plateforme open-source d'automatisation de workflows permettant de créer des scénarios complexes via une interface visuelle no-code/low-code. J'ai développé plusieurs agents IA autonomes en orchestrant différentes APIs (OpenAI, Google, Instagram, téléphonie VoIP) avec des webhooks et des traitements conditionnels avancés. Chaque agent est conçu pour résoudre un besoin métier concret et s'exécute de manière autonome en production.</p>
+          
+          <div class="n8n-agents">
+            <div class="agent-item">
+              <div class="agent-icon">📞</div>
+              <div class="agent-text">
+                <div class="agent-title">Agent IA Téléphonique</div>
+                <div class="agent-desc">Agent capable de répondre automatiquement aux appels entrants selon un script personnalisable. Utilise une API de reconnaissance vocale et de synthèse vocale couplée à GPT pour générer des réponses contextuelles en temps réel.</div>
+              </div>
+            </div>
+            <div class="agent-item">
+              <div class="agent-icon">🏠</div>
+              <div class="agent-text">
+                <div class="agent-title">IA de Home Staging Virtuel</div>
+                <div class="agent-desc">Agent pour agences immobilières utilisant l'API DALL-E et des modèles de vision par ordinateur. À partir d'une photo de pièce vide, l'IA génère automatiquement des propositions de décoration et d'ameublement pour faciliter la projection des clients.</div>
+              </div>
+            </div>
+            <div class="agent-item">
+              <div class="agent-icon">📧</div>
+              <div class="agent-text">
+                <div class="agent-title">Assistant Email Intelligent</div>
+                <div class="agent-desc">Agent analysant les emails entrants via l'API Gmail, générant des réponses contextuelles automatiques via GPT, et capable de planifier des rendez-vous directement dans Google Workspace (Calendar) en extrayant les informations pertinentes (date, heure, participants).</div>
+              </div>
+            </div>
+            <div class="agent-item">
+              <div class="agent-icon">💬</div>
+              <div class="agent-text">
+                <div class="agent-title">Bot Instagram Automatisé</div>
+                <div class="agent-desc">Agent répondant automatiquement aux messages privés Instagram via l'API Graph de Meta. Analyse le contenu des messages, génère des réponses adaptées et peut qualifier des leads ou router vers un humain selon des critères définis.</div>
+              </div>
+            </div>
+          </div>
+
+          <p class="project-body" style="margin-top:0">
+            Ces projets m'ont permis de maîtriser l'intégration d'APIs REST, la gestion de webhooks, l'authentification OAuth2, le traitement de données JSON, et la création de workflows complexes avec conditions, boucles et gestion d'erreurs. L'approche low-code de n8n permet un prototypage rapide tout en offrant la possibilité d'injecter du code JavaScript pour des traitements avancés.
+          </p>
+
+          <div class="project-details">
+            <div class="detail-cell"><div class="detail-cell-lbl">Plateforme</div><div class="detail-cell-val">n8n (self-hosted)</div></div>
+            <div class="detail-cell"><div class="detail-cell-lbl">APIs utilisées</div><div class="detail-cell-val">OpenAI · Google · Meta</div></div>
+            <div class="detail-cell"><div class="detail-cell-lbl">Agents créés</div><div class="detail-cell-val">4 agents en production</div></div>
+          </div>
+          <div class="project-footer">
+            <div class="tags">
+              <span class="tag">n8n</span><span class="tag">IA</span><span class="tag">API REST</span><span class="tag">Webhooks</span><span class="tag">Automatisation</span><span class="tag">GPT</span>
+            </div>
+            <a href="#" class="project-link">Voir les workflows →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="certifications">
+      <div class="sec-head reveal">
+        <span class="sec-badge">03 — certifications.list</span>
+        <h2 class="sec-title">Certifications</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="certif-grid">
+        <div class="certif-card reveal">
+          <div class="certif-glow"></div>
+          <div class="certif-header">
+            <div class="certif-icon">🛡️</div>
+            <div>
+              <div class="certif-name">TryHackMe</div>
+              <div class="certif-org">Cybersécurité · CTF</div>
+            </div>
+          </div>
+          <div class="certif-badge">✓ Certification obtenue</div>
+          <div class="certif-badge in-progress">⏳ Parcours supérieur en cours</div>
+          <p class="certif-body">J'ai obtenu la certification en cybersécurité sur la plateforme TryHackMe, validant des compétences pratiques en sécurité défensive et offensive, analyse de vulnérabilités et exploitation contrôlée. Je suis actuellement en train de suivre le parcours supérieur d'une durée de 37 heures pour obtenir la seconde certification Cybersécurité proposée par TryHackMe, approfondissant mes connaissances en pentest avancé, forensics et Red Team operations.</p>
+        </div>
+        <div class="certif-card reveal">
+          <div class="certif-glow green"></div>
+          <div class="certif-header">
+            <div class="certif-icon green">🌐</div>
+            <div>
+              <div class="certif-name">Global Exam</div>
+              <div class="certif-org">Certification Linguistique</div>
+            </div>
+          </div>
+          <div class="certif-badge">✓ Obtenue</div>
+          <p class="certif-body">Certification linguistique validant un niveau de maîtrise de l'anglais, indispensable dans un environnement IT international pour la lecture de documentation technique, la communication avec des équipes et les certifications professionnelles.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="letter">
+      <div class="sec-head reveal">
+        <span class="sec-badge">04 — recommendation.read</span>
+        <h2 class="sec-title">Lettre de recommandation</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="reveal">
+        <div class="letter-wrap">
+          <div class="letter-quote">"</div>
+          <p class="letter-text">Arthur fait preuve d'une remarquable capacité à s'approprier des concepts techniques complexes et à les mettre en pratique avec méthode et autonomie. Son investissement constant dans ses projets personnels et professionnels témoigne d'une vraie passion pour les réseaux et les systèmes. C'est un profil sérieux, curieux et fiable.</p>
+          <div class="letter-author">
+            <div class="letter-avatar">
+              <img src="/images/Yara.png" alt="JF Yara">
+            </div>
+            <div>
+              <div class="letter-name">Jean-François YARA</div>
+              <div class="letter-role">Manager technique, Direction Backbone chez Rhôn'TELECOM<br>Professeur à l'IPSSI</div>
+            </div>
+          </div>
+          <a href="#" class="btn btn-download" style="margin-top:1rem">📥 Télécharger la lettre de recommandation (PDF)</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-brand">arthur<span>.grizon</span> — portfolio 2025</div>
+    <div class="footer-links">
+      <a href="mailto:grizonarthur.pro@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/arthur-grizon-681555368/" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(r => io.observe(r));
+
+    const sections = document.querySelectorAll('section[id], div[id]');
+    const links = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 160) cur = s.id; });
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+    });
+  </script>
+</body>
+</html>
